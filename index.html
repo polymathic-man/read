@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Read</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6664765629890780"
+      crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="fonts/fonts.css" rel="stylesheet">
     <script>
@@ -77,6 +79,56 @@
           font-size: 2rem;
         }
       }
+
+      /* Desktop ad — horizontally centered on right margin, bottom − 100px */
+      #sidebar-ad-column {
+        display: none;
+      }
+
+      @media (min-width: 1024px) {
+        #sidebar-ad-column {
+          display: block;
+          position: fixed;
+          bottom: 100px;
+          left: calc(50% + 320px + (100vw - 640px) / 4);
+          transform: translateX(-50%);
+          z-index: 20;
+        }
+      }
+
+      #sidebar-ad-card {
+        width: 330px;
+        max-width: 340px;
+      }
+
+      #sidebar-ad-card .ad-media-slot {
+        aspect-ratio: 3 / 2;
+        min-height: 200px;
+      }
+
+      #sidebar-ad-card .ad-placeholder {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 1rem;
+        text-align: center;
+        background: linear-gradient(145deg, #18181b 0%, #0f0f12 100%);
+        pointer-events: none;
+      }
+
+      #sidebar-ad-card .ad-placeholder.is-hidden {
+        display: none;
+      }
+
+      #sidebar-ad-card .adsbygoogle {
+        display: block;
+        width: 100%;
+        min-height: 200px;
+      }
     </style>
 </head>
 <body>
@@ -95,7 +147,8 @@
         aria-hidden="true"
       ></span>
 
-      <div id="reading-canvas" class="w-full max-w-[640px] px-6 py-16 sm:py-24 mx-auto">
+      <div class="w-full max-w-[640px] mx-auto px-6 py-16 sm:py-24">
+      <div id="reading-canvas" class="w-full">
         <article id="reading-column" class="w-full font-serif">
           <div id="top-accent-container" class="mb-14">
             <div id="top-accent-rule" class="w-full h-px bg-gradient-to-r from-transparent via-[#C4A67F]/15 to-transparent pointer-events-none"></div>
@@ -105,7 +158,7 @@
             id="narrative-body"
             class="text-[20px] sm:text-[22px] !leading-[1.85] text-[#C5C8CC] space-y-8 text-left antialiased font-serif font-light tracking-wide"
           >
-            <p class="relative drop-cap">Mina woke me early and asked me to bring Dr. Van Helsing. As he passed into the room, he asked Mina if the others might come, too. “No,” she said quite simply, “it will not be necessary. You can tell them just as well. I must go with you on your journey.” Dr. Van Helsing was as startled as I was. After a moment’s pause he asked: “But why?” “You must take me with you.”<button
+            <p class="relative drop-cap">Linton,” I suggested, “that you have eaten some food with a relish this evening, and to-morrow you will perceive its good effects.” “If I were only sure it would kill him,” she interrupted, “I’d kill myself directly! These three awful nights I’ve never closed my lids—and oh, I’ve been tormented! I’ve been haunted, Nelly! But I begin to fancy you don’t like me. How strange! I thought, though everybody hated and despised each other, they could not avoid loving me.<button
                 id="audio-trigger"
                 type="button"
                 disabled
@@ -130,17 +183,45 @@
 
           <div id="citation-container" class="mt-14 text-right border-t border-white/5 pt-6">
             <span id="citation-text" class="text-xs sm:text-sm text-[#888A8F] tracking-[0.05em] uppercase font-sans font-light select-none hover:text-[#C5C8CC] transition-colors duration-300">
-              &mdash; Dracula &middot; Line 13197
+              &mdash; Wuthering Heights &middot; Line 4416
             </span>
           </div>
         </article>
       </div>
+      </div>
+
+      <!-- Right margin ad — horizontal center, bottom − 100px -->
+      <aside id="sidebar-ad-column" aria-label="Sponsored content">
+        <div class="w-full">
+          <div
+            id="sidebar-ad-card"
+            class="rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-950 shadow-lg"
+          >
+            <div class="ad-media-slot relative w-full overflow-hidden bg-zinc-900/60 flex items-center justify-center">
+              <div id="ad-placeholder" class="ad-placeholder font-sans">
+                <span class="text-[10px] uppercase tracking-widest text-zinc-500">Sponsored</span>
+                <span class="text-xs text-zinc-400 leading-snug">Ad fills here on your<br>approved live domain</span>
+              </div>
+              <ins
+                id="adsense-unit"
+                class="adsbygoogle"
+                style="display:block;width:300px;height:250px"
+                data-ad-client="ca-pub-6664765629890780"
+                data-ad-slot="6998122374"
+                data-ad-format="rectangle"
+                data-full-width-responsive="false"
+              ></ins>
+            </div>
+          </div>
+          <p class="mt-2 text-[11px] text-zinc-600 font-sans text-right pr-1 select-none">Ad</p>
+        </div>
+      </aside>
     </main>
     <script>
       const audioTrigger = document.getElementById('audio-trigger');
       const lineAudio = document.getElementById('line-audio');
       const audioDuration = document.getElementById('audio-duration');
-      const fullTextToSpeak = "Mina woke me early and asked me to bring Dr. Van Helsing. As he passed into the room, he asked Mina if the others might come, too. \u201cNo,\u201d she said quite simply, \u201cit will not be necessary. You can tell them just as well. I must go with you on your journey.\u201d Dr. Van Helsing was as startled as I was. After a moment\u2019s pause he asked: \u201cBut why?\u201d \u201cYou must take me with you.\u201d";
+      const fullTextToSpeak = "Linton,\u201d I suggested, \u201cthat you have eaten some food with a relish this evening, and to-morrow you will perceive its good effects.\u201d \u201cIf I were only sure it would kill him,\u201d she interrupted, \u201cI\u2019d kill myself directly! These three awful nights I\u2019ve never closed my lids\u2014and oh, I\u2019ve been tormented! I\u2019ve been haunted, Nelly! But I begin to fancy you don\u2019t like me. How strange! I thought, though everybody hated and despised each other, they could not avoid loving me.";
       const audioSrc = "passage_narration.wav";
       let isPlaying = false;
       let audioReady = false;
@@ -231,7 +312,32 @@
         }
       };
 
+      const ADSENSE_SLOT = "6998122374";
+      const adPlaceholder = document.getElementById('ad-placeholder');
+      const adsenseUnit = document.getElementById('adsense-unit');
+
+      const initAdSense = () => {
+        if (!window.matchMedia('(min-width: 1024px)').matches) return;
+
+        const slotReady = ADSENSE_SLOT && !ADSENSE_SLOT.startsWith('REPLACE_');
+        const onLiveSite = location.protocol === 'https:' || location.hostname === 'localhost';
+
+        if (!slotReady || !onLiveSite) return;
+
+        try {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+          window.setTimeout(() => {
+            if (adsenseUnit && adsenseUnit.dataset.adStatus === 'filled') {
+              adPlaceholder?.classList.add('is-hidden');
+            }
+          }, 3000);
+        } catch (error) {
+          console.warn('AdSense init skipped:', error);
+        }
+      };
+
       waitForNarration();
+      initAdSense();
       audioTrigger.addEventListener('click', toggleAudio);
       lineAudio.addEventListener('ended', () => setAudioState(false));
       lineAudio.addEventListener('pause', () => {
