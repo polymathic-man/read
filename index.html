@@ -78,7 +78,7 @@
         }
       }
 
-      /* Fixed lower-right ad (desktop) */
+      /* Desktop ad — horizontally centered on right margin, bottom − 100px */
       #sidebar-ad-column {
         display: none;
       }
@@ -87,8 +87,9 @@
         #sidebar-ad-column {
           display: block;
           position: fixed;
-          bottom: 30px;
-          right: 30px;
+          bottom: 100px;
+          left: calc(50% + 320px + (100vw - 640px) / 4);
+          transform: translateX(-50%);
           z-index: 50;
           width: 330px;
         }
@@ -96,6 +97,7 @@
 
       #sidebar-ad-card {
         width: 100%;
+        max-width: 340px;
         border-radius: 16px;
         overflow: hidden;
         border: 1px solid #27272a;
@@ -131,7 +133,7 @@
             id="narrative-body"
             class="text-[20px] sm:text-[22px] !leading-[1.85] text-[#C5C8CC] space-y-8 text-left antialiased font-serif font-light tracking-wide"
           >
-            <p class="relative drop-cap">The lieutenant asked why he had come so far upon the ice in so strange a vehicle. His countenance instantly assumed an aspect of the deepest gloom, and he replied, “To seek one who fled from me.” “And did the man whom you pursued travel in the same fashion?” “Yes.” “Then I fancy we have seen him, for the day before we picked you up we saw some dogs drawing a sledge, with a man in it, across the ice.”<button
+            <p class="relative drop-cap">“Well, we must look out for a suitable match for him. I shall go through Debrett carefully to-night and draw out a list of all the eligible young ladies.” “With their ages, Lady Narborough?” Asked Dorian. “Of course, with their ages, slightly edited. But nothing must be done in a hurry. I want it to be what The Morning Post calls a suitable alliance, and I want you both to be happy.” “What nonsense people talk about happy marriages!” Exclaimed Lord Henry.<button
                 id="audio-trigger"
                 type="button"
                 disabled
@@ -156,7 +158,7 @@
 
           <div id="citation-container" class="mt-14 text-right border-t border-white/5 pt-6">
             <span id="citation-text" class="text-xs sm:text-sm text-[#888A8F] tracking-[0.05em] uppercase font-sans font-light select-none hover:text-[#C5C8CC] transition-colors duration-300">
-              &mdash; Frankenstein &middot; Line 385
+              &mdash; The Picture of Dorian Gray &middot; Line 6705
             </span>
           </div>
         </article>
@@ -187,7 +189,7 @@
       const audioTrigger = document.getElementById('audio-trigger');
       const lineAudio = document.getElementById('line-audio');
       const audioDuration = document.getElementById('audio-duration');
-      const fullTextToSpeak = "The lieutenant asked why he had come so far upon the ice in so strange a vehicle. His countenance instantly assumed an aspect of the deepest gloom, and he replied, \u201cTo seek one who fled from me.\u201d \u201cAnd did the man whom you pursued travel in the same fashion?\u201d \u201cYes.\u201d \u201cThen I fancy we have seen him, for the day before we picked you up we saw some dogs drawing a sledge, with a man in it, across the ice.\u201d";
+      const fullTextToSpeak = "\u201cWell, we must look out for a suitable match for him. I shall go through Debrett carefully to-night and draw out a list of all the eligible young ladies.\u201d \u201cWith their ages, Lady Narborough?\u201d Asked Dorian. \u201cOf course, with their ages, slightly edited. But nothing must be done in a hurry. I want it to be what The Morning Post calls a suitable alliance, and I want you both to be happy.\u201d \u201cWhat nonsense people talk about happy marriages!\u201d Exclaimed Lord Henry.";
       const audioSrc = "passage_narration.wav";
       let isPlaying = false;
       let audioReady = false;
