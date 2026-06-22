@@ -19,29 +19,37 @@
     }
   </script>
 </head>
-<body class="bg-[#0A0A0B] text-[#E2E2E2] antialiased overflow-hidden">
+<body class="bg-[#070708] text-[#E2E2E2] antialiased overflow-hidden">
   <main class="h-screen">
     <nav
-      class="fixed left-0 right-0 top-0 z-[70] border-b border-white/10 bg-[#0A0A0B]/90 px-4 py-3 font-sans text-xs uppercase tracking-[0.12em] text-zinc-400 backdrop-blur"
+      class="fixed left-0 right-0 top-0 z-[70] border-b border-white/5 bg-[#070708]/90 px-4 py-3.5 font-sans text-xs uppercase tracking-[0.15em] text-zinc-400 backdrop-blur-md"
       aria-label="Reading days"
     >
       <div class="mx-auto flex max-w-[980px] justify-center">
-        <span id="day-label" class="text-[#E2D2B0]">Day 1</span>
+        <span id="day-label" class="font-medium text-[#E2D2B0] transition-all duration-300">Day 1</span>
       </div>
     </nav>
 
     <button
       id="previous-day"
       type="button"
-      class="fixed left-3 top-1/2 z-[70] flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/35 font-sans text-2xl text-zinc-300 transition-colors hover:border-[#C4A67F]/60 hover:text-[#E2D2B0] disabled:border-white/5 disabled:text-zinc-700 sm:left-6"
+      class="fixed left-3 top-1/2 z-[70] flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-black/35 font-sans text-lg text-zinc-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#C4A67F]/60 hover:text-[#E2D2B0] active:scale-95 disabled:pointer-events-none disabled:opacity-0 sm:left-6"
       aria-label="Previous day"
-    >&larr;</button>
+    >
+      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="m15 18-6-6 6-6"></path>
+      </svg>
+    </button>
     <button
       id="next-day"
       type="button"
-      class="fixed right-3 top-1/2 z-[70] flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/35 font-sans text-2xl text-zinc-300 transition-colors hover:border-[#C4A67F]/60 hover:text-[#E2D2B0] disabled:border-white/5 disabled:text-zinc-700 sm:right-6"
+      class="fixed right-3 top-1/2 z-[70] flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-black/35 font-sans text-lg text-zinc-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#C4A67F]/60 hover:text-[#E2D2B0] active:scale-95 disabled:pointer-events-none disabled:opacity-0 sm:right-6"
       aria-label="Next day"
-    >&rarr;</button>
+    >
+      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="m9 18 6-6-6-6"></path>
+      </svg>
+    </button>
 
     <iframe
       id="reading-frame"
@@ -52,7 +60,7 @@
       <p class="fixed inset-0 flex items-center justify-center px-6 font-sans text-sm text-zinc-400"><a class="text-[#C4A67F] underline" href="2026-06-21-222755/index.html">Open Day 1</a></p>
     </noscript>
   </main>
-  <script id="reading-days" type="application/json">[{"label": "Day 1", "src": "2026-06-21-222755/index.html"}, {"label": "Day 2", "src": "2026-06-21-223033/index.html"}, {"label": "Day 3", "src": "2026-06-21-224252/index.html"}]</script>
+  <script id="reading-days" type="application/json">[{"label": "Day 1", "src": "2026-06-21-222755/index.html"}, {"label": "Day 2", "src": "2026-06-21-223033/index.html"}, {"label": "Day 3", "src": "2026-06-21-224252/index.html"}, {"label": "Day 4", "src": "2026-06-21-230448/index.html"}]</script>
   <script>
     const days = JSON.parse(document.getElementById('reading-days').textContent);
     const frame = document.getElementById('reading-frame');
