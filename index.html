@@ -30,10 +30,11 @@
       </div>
     </nav>
 
+    <!-- Desktop: flank chevrons sit in the margins, never over the reading column -->
     <button
       id="previous-day"
       type="button"
-      class="fixed left-3 top-1/2 z-[70] flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-black/35 font-sans text-lg text-zinc-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#C4A67F]/60 hover:text-[#E2D2B0] active:scale-95 disabled:pointer-events-none disabled:opacity-0 sm:left-6"
+      class="hidden lg:flex fixed left-8 xl:left-14 top-1/2 z-[70] h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-black/40 font-sans text-zinc-300 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-110 hover:border-[#C4A67F]/60 hover:text-[#E2D2B0] active:scale-95 disabled:pointer-events-none disabled:opacity-0"
       aria-label="Previous day"
     >
       <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -43,7 +44,7 @@
     <button
       id="next-day"
       type="button"
-      class="fixed right-3 top-1/2 z-[70] flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-black/35 font-sans text-lg text-zinc-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#C4A67F]/60 hover:text-[#E2D2B0] active:scale-95 disabled:pointer-events-none disabled:opacity-0 sm:right-6"
+      class="hidden lg:flex fixed right-8 xl:right-14 top-1/2 z-[70] h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-black/40 font-sans text-zinc-300 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-110 hover:border-[#C4A67F]/60 hover:text-[#E2D2B0] active:scale-95 disabled:pointer-events-none disabled:opacity-0"
       aria-label="Next day"
     >
       <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -51,22 +52,57 @@
       </svg>
     </button>
 
-    <iframe
-      id="reading-frame"
-      class="h-full w-full border-0"
-      title="Reading passage"
-    ></iframe>
+    <!-- Mobile/tablet: bottom pill keeps controls off the passage text -->
+    <div
+      id="tablet-mobile-controls"
+      class="fixed bottom-5 left-1/2 z-[70] flex lg:hidden w-[min(100%,20rem)] -translate-x-1/2 items-center justify-between rounded-full border border-white/5 bg-[#0E0E10]/95 px-5 py-2.5 font-sans shadow-2xl backdrop-blur-md select-none"
+    >
+      <button
+        id="mobile-previous-day"
+        type="button"
+        class="flex cursor-pointer items-center gap-1 text-xs font-medium tracking-wider text-zinc-400 transition-colors hover:text-[#E2D2B0] disabled:pointer-events-none disabled:opacity-20 focus:outline-none"
+        aria-label="Previous day"
+      >
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m15 18-6-6 6-6"></path>
+        </svg>
+        Prev Day
+      </button>
+      <span id="mobile-day-label" class="text-[10px] font-semibold tracking-widest text-[#C4A67F]">DAY 1</span>
+      <button
+        id="mobile-next-day"
+        type="button"
+        class="flex cursor-pointer items-center gap-1 text-xs font-medium tracking-wider text-zinc-400 transition-colors hover:text-[#E2D2B0] disabled:pointer-events-none disabled:opacity-20 focus:outline-none"
+        aria-label="Next day"
+      >
+        Next Day
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m9 18 6-6-6-6"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div id="reading-frame-wrap" class="h-full w-full pt-14 pb-[4.75rem] lg:pt-0 lg:pb-0">
+      <iframe
+        id="reading-frame"
+        class="h-full w-full border-0"
+        title="Reading passage"
+      ></iframe>
+    </div>
     <noscript>
       <p class="fixed inset-0 flex items-center justify-center px-6 font-sans text-sm text-zinc-400"><a class="text-[#C4A67F] underline" href="2026-06-21-222755/index.html">Open Day 1</a></p>
     </noscript>
   </main>
-  <script id="reading-days" type="application/json">[{"label": "Day 1", "src": "2026-06-21-222755/index.html"}, {"label": "Day 2", "src": "2026-06-21-223033/index.html"}, {"label": "Day 3", "src": "2026-06-21-224252/index.html"}, {"label": "Day 4", "src": "2026-06-21-230448/index.html"}, {"label": "Day 5", "src": "2026-06-22-153027/index.html"}]</script>
+  <script id="reading-days" type="application/json">[{"label": "Day 1", "src": "2026-06-21-222755/index.html"}, {"label": "Day 2", "src": "2026-06-21-223033/index.html"}, {"label": "Day 3", "src": "2026-06-21-224252/index.html"}, {"label": "Day 4", "src": "2026-06-21-230448/index.html"}, {"label": "Day 5", "src": "2026-06-22-153027/index.html"}, {"label": "Day 6", "src": "2026-06-22-161831/index.html"}]</script>
   <script>
     const days = JSON.parse(document.getElementById('reading-days').textContent);
     const frame = document.getElementById('reading-frame');
     const label = document.getElementById('day-label');
+    const mobileLabel = document.getElementById('mobile-day-label');
     const previous = document.getElementById('previous-day');
     const next = document.getElementById('next-day');
+    const mobilePrevious = document.getElementById('mobile-previous-day');
+    const mobileNext = document.getElementById('mobile-next-day');
     let current = 0;
 
     const render = () => {
@@ -74,30 +110,41 @@
         frame.remove();
         previous.disabled = true;
         next.disabled = true;
+        mobilePrevious.disabled = true;
+        mobileNext.disabled = true;
         label.textContent = 'Read';
+        mobileLabel.textContent = 'READ';
         return;
       }
 
       const day = days[current];
       frame.src = day.src;
       label.textContent = day.label;
+      mobileLabel.textContent = day.label.toUpperCase();
       previous.disabled = current === 0;
       next.disabled = current === days.length - 1;
+      mobilePrevious.disabled = current === 0;
+      mobileNext.disabled = current === days.length - 1;
     };
 
-    previous.addEventListener('click', () => {
+    const goPrevious = () => {
       if (current > 0) {
         current -= 1;
         render();
       }
-    });
+    };
 
-    next.addEventListener('click', () => {
+    const goNext = () => {
       if (current < days.length - 1) {
         current += 1;
         render();
       }
-    });
+    };
+
+    previous.addEventListener('click', goPrevious);
+    next.addEventListener('click', goNext);
+    mobilePrevious.addEventListener('click', goPrevious);
+    mobileNext.addEventListener('click', goNext);
 
     render();
   </script>
