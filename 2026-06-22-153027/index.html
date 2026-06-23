@@ -190,6 +190,7 @@
       const audioTrigger = document.getElementById('audio-trigger');
       const lineAudio = document.getElementById('line-audio');
       const audioDuration = document.getElementById('audio-duration');
+      if (window.self !== window.top && audioDuration) audioDuration.remove();
       const fullTextToSpeak = "\u201cI am so sorry for you, Alan,\u201d he murmured, \u201cbut you leave me no alternative. You treated me as no man has ever dared to treat me\u2014no living man, at any rate. I bore it all. Now it is for me to dictate terms.\u201d Campbell buried his face in his hands, and a shudder passed through him. \u201cYes, it is my turn to dictate terms, Alan. You know what they are. The thing is quite simple. Come, don\u2019t work yourself into this fever. The thing has to be done.\u201d";
       const audioSrc = "passage_narration.wav";
       let isPlaying = false;
