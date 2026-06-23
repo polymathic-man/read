@@ -190,6 +190,7 @@
       const audioTrigger = document.getElementById('audio-trigger');
       const lineAudio = document.getElementById('line-audio');
       const audioDuration = document.getElementById('audio-duration');
+      if (window.self !== window.top && audioDuration) audioDuration.remove();
       const fullTextToSpeak = "He looked upon me, however, with some degree of severity, and then, turning towards my conductors, he asked who appeared as witnesses on this occasion. About half a dozen men came forward and, one being selected by the magistrate, he deposed that he had been out fishing the night before with his son and brother-in-law, Daniel Nugent, when, about ten o\u2019clock, they observed a strong northerly blast rising, and they accordingly put in for port.";
       const audioSrc = "passage_narration.wav";
       let isPlaying = false;
