@@ -190,6 +190,7 @@
       const audioTrigger = document.getElementById('audio-trigger');
       const lineAudio = document.getElementById('line-audio');
       const audioDuration = document.getElementById('audio-duration');
+      if (window.self !== window.top && audioDuration) audioDuration.remove();
       const fullTextToSpeak = "\"If you are displeased, we will unweave the thread,\" Atropos said, appearing before Hades and snatching the book from his hands. She was the oldest and still looked no different than her sisters, dressed in bloodred, a pair of abhorrent, gold shears hung from a chain around her neck. Hades glared at the three of them. \"I know you well, Morai,\" he said, addressing all of them at once. \"Who are you punishing?\" They exchanged a look.";
       const audioSrc = "passage_narration.wav";
       let isPlaying = false;
