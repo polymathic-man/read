@@ -25,8 +25,14 @@
       class="fixed left-0 right-0 top-0 z-[70] border-b border-white/5 bg-[#070708]/90 px-4 py-3.5 font-sans text-xs uppercase tracking-[0.15em] text-zinc-400 backdrop-blur-md"
       aria-label="Reading days"
     >
-      <div class="mx-auto flex max-w-[980px] justify-center">
-        <span id="day-label" class="font-medium text-[#E2D2B0] transition-all duration-300">Day 1</span>
+      <div class="mx-auto grid max-w-[980px] grid-cols-3 items-center">
+        <span aria-hidden="true"></span>
+        <span id="day-label" class="text-center font-medium text-[#E2D2B0] transition-all duration-300">Day 1</span>
+        <span
+          id="audio-duration"
+          class="text-right font-light text-[13px] leading-none tracking-wide text-[#888A8F]/75 tabular-nums opacity-0 transition-opacity duration-500"
+          aria-hidden="true"
+        ></span>
       </div>
     </nav>
 
@@ -93,17 +99,39 @@
       <p class="fixed inset-0 flex items-center justify-center px-6 font-sans text-sm text-zinc-400"><a class="text-[#C4A67F] underline" href="2026-06-21-222755/index.html">Open Day 1</a></p>
     </noscript>
   </main>
-  <script id="reading-days" type="application/json">[{"label": "Day 1", "src": "2026-06-21-222755/index.html"}, {"label": "Day 2", "src": "2026-06-21-223033/index.html"}, {"label": "Day 3", "src": "2026-06-21-224252/index.html"}, {"label": "Day 4", "src": "2026-06-21-230448/index.html"}, {"label": "Day 5", "src": "2026-06-22-153027/index.html"}, {"label": "Day 6", "src": "2026-06-22-161831/index.html"}, {"label": "Day 7", "src": "2026-06-22-171514/index.html"}]</script>
+  <script id="reading-days" type="application/json">[{"label": "Day 1", "src": "2026-06-21-222755/index.html"}, {"label": "Day 2", "src": "2026-06-21-223033/index.html"}, {"label": "Day 3", "src": "2026-06-21-224252/index.html"}, {"label": "Day 4", "src": "2026-06-21-230448/index.html"}, {"label": "Day 5", "src": "2026-06-22-153027/index.html"}, {"label": "Day 6", "src": "2026-06-22-161831/index.html"}, {"label": "Day 7", "src": "2026-06-22-171514/index.html"}, {"label": "Day 8", "src": "2026-06-22-222845/index.html"}]</script>
   <script>
     const days = JSON.parse(document.getElementById('reading-days').textContent);
     const frame = document.getElementById('reading-frame');
     const label = document.getElementById('day-label');
+    const audioDuration = document.getElementById('audio-duration');
     const mobileLabel = document.getElementById('mobile-day-label');
     const previous = document.getElementById('previous-day');
     const next = document.getElementById('next-day');
     const mobilePrevious = document.getElementById('mobile-previous-day');
     const mobileNext = document.getElementById('mobile-next-day');
+    const durationProbe = new Audio();
     let current = 0;
+
+    const updateShellDuration = () => {
+      const seconds = durationProbe.duration;
+      if (!seconds || !Number.isFinite(seconds)) return;
+      audioDuration.textContent = `${Math.round(seconds)}s`;
+      audioDuration.classList.remove('opacity-0');
+      audioDuration.removeAttribute('aria-hidden');
+    };
+
+    const loadShellDuration = (daySrc) => {
+      audioDuration.textContent = '';
+      audioDuration.classList.add('opacity-0');
+      audioDuration.setAttribute('aria-hidden', 'true');
+      const wavSrc = daySrc.replace(/\/index\.html$/, '/passage_narration.wav');
+      durationProbe.removeAttribute('src');
+      durationProbe.load();
+      durationProbe.src = wavSrc;
+      durationProbe.addEventListener('loadedmetadata', updateShellDuration, { once: true });
+      durationProbe.load();
+    };
 
     const render = () => {
       if (!days.length) {
@@ -114,6 +142,8 @@
         mobileNext.disabled = true;
         label.textContent = 'Read';
         mobileLabel.textContent = 'READ';
+        audioDuration.textContent = '';
+        audioDuration.classList.add('opacity-0');
         return;
       }
 
@@ -125,6 +155,7 @@
       next.disabled = current === days.length - 1;
       mobilePrevious.disabled = current === 0;
       mobileNext.disabled = current === days.length - 1;
+      loadShellDuration(day.src);
     };
 
     const goPrevious = () => {
