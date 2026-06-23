@@ -190,6 +190,7 @@
       const audioTrigger = document.getElementById('audio-trigger');
       const lineAudio = document.getElementById('line-audio');
       const audioDuration = document.getElementById('audio-duration');
+      if (window.self !== window.top && audioDuration) audioDuration.remove();
       const fullTextToSpeak = "\u201cThe crosses are for the evenings you have spent with the Lintons, the dots for those spent with me. Do you see? I\u2019ve marked every day.\u201d \u201cYes\u2014very foolish: as if I took notice!\u201d Replied Catherine, in a peevish tone. \u201cAnd where is the sense of that?\u201d \u201cTo show that I do take notice,\u201d said Heathcliff.";
       const audioSrc = "passage_narration.wav";
       let isPlaying = false;
