@@ -190,6 +190,7 @@
       const audioTrigger = document.getElementById('audio-trigger');
       const lineAudio = document.getElementById('line-audio');
       const audioDuration = document.getElementById('audio-duration');
+      if (window.self !== window.top && audioDuration) audioDuration.remove();
       const fullTextToSpeak = "\u201cBut I fear, Dr. Seward, that you hardly apprehend my wish. I desire to go at once\u2014here\u2014now\u2014this very hour\u2014this very moment, if I may. Time presses, and in our implied agreement with the old scytheman it is of the essence of the contract. I am sure it is only necessary to put before so admirable a practitioner as Dr. Seward so simple, yet so momentous a wish, to ensure its fulfilment.\u201d He looked at me keenly, and seeing the negative in my face, turned to the others, and scrutinised them closely.";
       const audioSrc = "passage_narration.wav";
       let isPlaying = false;
