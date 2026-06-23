@@ -190,6 +190,7 @@
       const audioTrigger = document.getElementById('audio-trigger');
       const lineAudio = document.getElementById('line-audio');
       const audioDuration = document.getElementById('audio-duration');
+      if (window.self !== window.top && audioDuration) audioDuration.remove();
       const fullTextToSpeak = "He\u2019s very delicate, sir; and scarcely likely to reach manhood: but this I can say, he does not resemble his father; and if Miss Catherine had the misfortune to marry him, he would not be beyond her control. Edgar sighed; and, walking to the window, looked out towards Gimmerton Kirk. \u201cI\u2019ve prayed often,\u201d he half soliloquised, \u201cfor the approach of what is coming; and now I begin to shrink, and fear it.\u201d";
       const audioSrc = "passage_narration.wav";
       let isPlaying = false;
