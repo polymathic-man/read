@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="../fonts/fonts.css" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ['"Lora"', '"Crimson Pro"', 'Georgia', 'serif'],
+              sans: ['"Inter"', '"Helvetica Neue"', 'system-ui', '-apple-system', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #0A0A0B;
+        word-spacing: 0.02em;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      #audio-trigger .icon-stop {
+        display: none;
+      }
+
+      #audio-trigger.is-playing {
+        border-color: #C4A67F;
+        color: #C4A67F;
+        background: rgba(196, 166, 127, 0.1);
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+
+      #audio-trigger.is-playing .icon-play {
+        display: none;
+      }
+
+      #audio-trigger.is-playing .icon-stop {
+        display: block;
+      }
+
+      #audio-trigger:disabled {
+        pointer-events: none;
+      }
+
+      #audio-trigger:not(:disabled) {
+        cursor: pointer;
+        opacity: 1;
+      }
+
+      #audio-trigger:not(:disabled):hover {
+        color: #C4A67F;
+        border-color: rgba(196, 166, 127, 0.45);
+      }
+
+      /* Drop cap: inline flow (no float), tight join to 2nd letter */
+      #narrative-body > p.drop-cap::first-letter {
+        color: #C4A67F;
+        font-size: 1.875rem;
+        line-height: 1;
+        font-weight: 400;
+        letter-spacing: 0;
+        margin-right: 0.05em;
+        padding-right: 0;
+        float: none;
+      }
+
+      @media (min-width: 640px) {
+        #narrative-body > p.drop-cap::first-letter {
+          font-size: 2rem;
+        }
+      }
+
+      /* Desktop ad — horizontally centered on right margin, bottom − 100px */
+      #sidebar-ad-column {
+        display: none;
+      }
+
+      @media (min-width: 1024px) {
+        #sidebar-ad-column {
+          display: block;
+          position: fixed;
+          bottom: 100px;
+          left: calc(50% + 320px + (100vw - 640px) / 4);
+          transform: translateX(-50%);
+          z-index: 50;
+          width: 330px;
+        }
+      }
+
+      #sidebar-ad-card {
+        width: 100%;
+        max-width: 340px;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid #27272a;
+        background: #09090b;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      }
+    </style>
+</head>
+<body>
+    <main
+      id="reader-viewport"
+      class="min-h-screen bg-[#0A0A0B] text-[#E2E2E2] flex items-center justify-center font-serif relative overflow-x-hidden selection:bg-[#C4A67F]/20 selection:text-[#E2D2B0]"
+    >
+      <audio id="line-audio" preload="auto" src="passage_narration.wav"></audio>
+
+      <div id="left-accent-rule" class="fixed inset-y-0 left-0 w-[1px] bg-gradient-to-b from-white/0 via-white/5 to-white/0 pointer-events-none"></div>
+      <div id="right-accent-rule" class="fixed inset-y-0 right-0 w-[1px] bg-gradient-to-b from-white/0 via-white/5 to-white/0 pointer-events-none"></div>
+
+      <span
+        id="audio-duration"
+        class="fixed top-5 right-5 sm:top-6 sm:right-6 font-sans font-light text-[13px] leading-none tracking-wide text-[#888A8F]/75 tabular-nums pointer-events-none select-none opacity-0 transition-opacity duration-500"
+        aria-hidden="true"
+      ></span>
+
+      <div class="w-full max-w-[640px] mx-auto px-6 py-16 sm:py-24">
+      <div id="reading-canvas" class="w-full">
+        <article id="reading-column" class="w-full font-serif">
+          <div id="top-accent-container" class="mb-14">
+            <div id="top-accent-rule" class="w-full h-px bg-gradient-to-r from-transparent via-[#C4A67F]/15 to-transparent pointer-events-none"></div>
+          </div>
+
+          <div
+            id="narrative-body"
+            class="text-[20px] sm:text-[22px] !leading-[1.85] text-[#C5C8CC] space-y-8 text-left antialiased font-serif font-light tracking-wide"
+          >
+            <p class="relative drop-cap">I was benevolent and good; misery made me a fiend. Make me happy, and I shall again be virtuous. Like Adam, I was apparently united by no link to any other being in existence — but his state was far different from mine. He was allowed to converse with and acquire knowledge from beings of a superior nature; but I was wretched, helpless, and alone.<button
+                id="audio-trigger"
+                type="button"
+                disabled
+                aria-disabled="true"
+                title="Preparing narration..."
+                aria-label="Narration loading"
+                aria-pressed="false"
+                class="inline-flex items-center justify-center ml-3 p-1 rounded-full border border-white/10 bg-white/5 text-zinc-400 transition-all duration-300 transform scale-110 select-none align-middle opacity-40 cursor-not-allowed"
+              >
+                <svg class="icon-play w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"></path>
+                  <path d="M16 9a5 5 0 0 1 0 6"></path>
+                  <path d="M19.364 4.636a9 9 0 0 1 0 12.728"></path>
+                </svg>
+                <svg class="icon-stop w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"></path>
+                  <line x1="22" y1="9" x2="16" y2="15"></line>
+                  <line x1="16" y1="9" x2="22" y2="15"></line>
+                </svg>
+              </button></p>
+          </div>
+
+          <div id="citation-container" class="mt-14 text-right border-t border-white/5 pt-6">
+            <span id="citation-text" class="text-xs sm:text-sm text-[#888A8F] tracking-[0.05em] uppercase font-sans font-light select-none hover:text-[#C5C8CC] transition-colors duration-300">
+              &mdash; Frankenstein &middot; Line 3998
+            </span>
+          </div>
+        </article>
+      </div>
+      </div>
+
+      
+      <aside id="sidebar-ad-column" aria-label="Sponsored content">
+        <div class="w-full">
+          <div id="sidebar-ad-card">
+            <div class="p-3 bg-zinc-900/60 rounded-xl">
+              <script>
+                atOptions = {
+                  'key' : '5109998b9192a704ffc6fe7e627f85d7',
+                  'format' : 'iframe',
+                  'height' : 250,
+                  'width' : 300,
+                  'params' : {}
+                };
+              </script>
+              <script src="https://www.highperformanceformat.com/5109998b9192a704ffc6fe7e627f85d7/invoke.js"></script>
+            </div>
+          </div>
+          <p class="mt-2 text-[11px] text-zinc-600 font-sans text-right pr-1 select-none">Ad</p>
+        </div>
+      </aside>
+    </main>
+    <script>
+      const audioTrigger = document.getElementById('audio-trigger');
+      const lineAudio = document.getElementById('line-audio');
+      const audioDuration = document.getElementById('audio-duration');
+      if (window.self !== window.top && audioDuration) audioDuration.remove();
+      const fullTextToSpeak = "I was benevolent and good; misery made me a fiend. Make me happy, and I shall again be virtuous. Like Adam, I was apparently united by no link to any other being in existence \u2014 but his state was far different from mine. He was allowed to converse with and acquire knowledge from beings of a superior nature; but I was wretched, helpless, and alone.";
+      const audioSrc = "passage_narration.wav";
+      let isPlaying = false;
+      let audioReady = false;
+
+      const updateAudioDuration = () => {
+        const seconds = lineAudio.duration;
+        if (!seconds || !Number.isFinite(seconds)) return;
+        audioDuration.textContent = `${Math.round(seconds)}s`;
+        audioDuration.classList.remove('opacity-0');
+      };
+
+      const enableAudioButton = () => {
+        if (audioReady) return;
+        audioReady = true;
+        updateAudioDuration();
+        audioTrigger.disabled = false;
+        audioTrigger.removeAttribute('aria-disabled');
+        audioTrigger.classList.remove('opacity-40', 'cursor-not-allowed');
+        audioTrigger.setAttribute('title', 'Listen to reading');
+        audioTrigger.setAttribute('aria-label', 'Listen to this passage');
+      };
+
+      const waitForNarration = () => {
+        const probe = () => {
+          lineAudio.src = `${audioSrc}?${Date.now()}`;
+          lineAudio.load();
+        };
+
+        lineAudio.addEventListener('loadedmetadata', updateAudioDuration);
+        lineAudio.addEventListener('canplaythrough', enableAudioButton, { once: true });
+        lineAudio.addEventListener('error', () => {
+          setTimeout(probe, 1500);
+        });
+        probe();
+      };
+
+      window.addEventListener('beforeunload', () => {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+        }
+      });
+
+      const setAudioState = (playing) => {
+        isPlaying = playing;
+        audioTrigger.classList.toggle('is-playing', playing);
+        audioTrigger.setAttribute('aria-pressed', String(playing));
+        audioTrigger.setAttribute('title', playing ? 'Stop reading' : 'Listen to reading');
+        audioTrigger.setAttribute('aria-label', playing ? 'Stop reading' : 'Listen to this passage');
+      };
+
+      const speakFallback = () => {
+        if (!('speechSynthesis' in window)) {
+          alert('Text-to-speech is not supported in this browser.');
+          return;
+        }
+
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(fullTextToSpeak);
+        utterance.rate = 0.85;
+        utterance.pitch = 0.95;
+        utterance.onend = () => setAudioState(false);
+        utterance.onerror = () => setAudioState(false);
+        setAudioState(true);
+        window.speechSynthesis.speak(utterance);
+      };
+
+      const toggleAudio = async () => {
+        if (!audioReady || audioTrigger.disabled) {
+          return;
+        }
+
+        if (isPlaying) {
+          lineAudio.pause();
+          lineAudio.currentTime = 0;
+          if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+          }
+          setAudioState(false);
+          return;
+        }
+
+        try {
+          lineAudio.currentTime = 0;
+          await lineAudio.play();
+          setAudioState(true);
+        } catch (error) {
+          speakFallback();
+        }
+      };
+
+      waitForNarration();
+      audioTrigger.addEventListener('click', toggleAudio);
+      lineAudio.addEventListener('ended', () => setAudioState(false));
+      lineAudio.addEventListener('pause', () => {
+        if (lineAudio.currentTime === 0 || lineAudio.ended) {
+          setAudioState(false);
+        }
+      });
+    </script>
+</body>
+</html>
